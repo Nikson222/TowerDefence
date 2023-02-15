@@ -7,82 +7,79 @@ public class WaveSpawner : MonoBehaviour
 {
     [SerializeField] private Transform _parentForSpawned;
 
-    [SerializeField] private GameObject _parentOfWaypoints;
-    private WayPoint[] waypoints;
+    [SerializeField] private WayPoint[] _waypoints;
 
     [SerializeField] private Wave[] _waves;
     private int _waveIndex = 0;
-    private int _elementIndex = 0;
-    private int _elementsleftToSpawn;
-    private int _currentElementEnemyiesleftToSpawn;
 
-    //private Action<int> OnElementSpawnCompleted;
-    //private Coroutine spawnCoroutine;
+    [SerializeField] EnemiesPooler _enemyPooler;
+
+    private Action OnWaveSpawned;
+
+#if UNITY_EDITOR
+    [SerializeField] private GameObject _parentOfWaypoints;
+    private void OnValidate()
+    {
+        if (_parentOfWaypoints != null && _waypoints.Length == 0)
+            _waypoints = _parentOfWaypoints.GetComponentsInChildren<WayPoint>();
+    }
+#endif
+
     private void Start()
     {
-        waypoints = _parentOfWaypoints.GetComponentsInChildren<WayPoint>();
-        _elementsleftToSpawn = _waves[_waveIndex].ElemensOfWaveSettings.Length;
-        _currentElementEnemyiesleftToSpawn = _waves[_waveIndex].ElemensOfWaveSettings[_elementIndex].countOfEnemy;
+        _waveIndex = 0;
 
-        StartCoroutine(SpawnEnemiesFromElementOfWave());
+        _enemyPooler.Init(WeedOutRepeatingEnemies());
+
+        OnWaveSpawned += StartWave;
+
+        StartWave();
     }
 
-    //private void LaunchWave(int waveIdex)
-    //{
-    //    spawnCoroutine = StartCoroutine(SpawnEnemiesFromElementOfWave());
-    //}
+    private void StartWave()
+    {
+        StartCoroutine(StartWaveCoroutine());
+    }
 
-    private IEnumerator SpawnEnemiesFromElementOfWave()
+    private IEnumerator StartWaveCoroutine()
     {
         yield return new WaitForSeconds(_waves[_waveIndex].StartWaveDelay);
+        StartCoroutine(SpawnWave());
+    }
 
-        while (true)
+    private IEnumerator SpawnWave()
+    {
+        for (int _elementIndex = 0; _elementIndex < _waves[_waveIndex].ElemensOfWaveSettings.Length; _elementIndex++)
         {
-            if (_currentElementEnemyiesleftToSpawn > 0)
+            for (int enemyCount = _waves[_waveIndex].ElemensOfWaveSettings[_elementIndex].countOfEnemy; enemyCount > 0; enemyCount--)
             {
-                var spawnedEnemy = Instantiate(_waves[_waveIndex].ElemensOfWaveSettings[_elementIndex].EnemyPrefab, _parentForSpawned).GetComponent<MoveableEnemy>();
-                spawnedEnemy.InitPath(waypoints);
+                var spawnedEnemy = _enemyPooler.GiveEnemies(_waves[_waveIndex].ElemensOfWaveSettings[_elementIndex].EnemyPrefab);
+                spawnedEnemy.InitPath(_waypoints);
                 spawnedEnemy.gameObject.transform.position = _waves[_waveIndex].spawnPosition.position;
 
-                _currentElementEnemyiesleftToSpawn--;
                 yield return new WaitForSeconds(_waves[_waveIndex].ElemensOfWaveSettings[_elementIndex].spawnDelay);
             }
-            else
-            {
-                _elementIndex++;
-                _elementsleftToSpawn--;
 
-                if (_elementIndex < _waves[_waveIndex].ElemensOfWaveSettings.Length)
-                {
-                    yield return new WaitForSeconds(_waves[_waveIndex].ElemensOfWaveSettings[_elementIndex].SwitchToNextElementDelay);
-                    SetNeededCountenemiesToSpawn();
-                }
-                else
-                {
-                    _waveIndex++;
-                    if (_waveIndex < _waves.Length)
-                    {
-                        InitWave();
-                        yield return new WaitForSeconds(_waves[_waveIndex].StartWaveDelay);
-                    }
-                    else
-                        break;
-                }
+            yield return new WaitForSeconds(_waves[_waveIndex].ElemensOfWaveSettings[_elementIndex].SwitchToNextElementDelay);
+        }
+
+        _waveIndex++;
+        if(_waveIndex < _waves.Length && OnWaveSpawned != null)
+            OnWaveSpawned.Invoke();
+    }
+
+    private HashSet<MoveableEnemy> WeedOutRepeatingEnemies()
+    {
+        HashSet<MoveableEnemy> result = new HashSet<MoveableEnemy>();
+
+        foreach (var wave in _waves)
+        {
+            foreach (var element in wave.ElemensOfWaveSettings)
+            {
+                result.Add(element.EnemyPrefab.GetComponent<MoveableEnemy>());
             }
         }
-    }
 
-    private void InitWave()
-    {
-        _elementIndex = 0;
-
-        _elementsleftToSpawn = _waves[_waveIndex].ElemensOfWaveSettings.Length;
-        _currentElementEnemyiesleftToSpawn = _waves[_waveIndex].ElemensOfWaveSettings[_elementIndex].countOfEnemy;
-
-    }
-
-    private void SetNeededCountenemiesToSpawn()
-    {
-        _currentElementEnemyiesleftToSpawn = _waves[_waveIndex].ElemensOfWaveSettings[_elementIndex].countOfEnemy;
+        return result;
     }
 }

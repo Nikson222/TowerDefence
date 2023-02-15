@@ -7,8 +7,8 @@ public class Wave
 {
     [SerializeField] private float _startWaveDelay;
     [SerializeField] Transform _spawnPosition;
-    [SerializeField] private ElemenOfWaveSettings[] _elemensOfWaveSettings;
-    public ElemenOfWaveSettings[] ElemensOfWaveSettings => _elemensOfWaveSettings;
+    [SerializeField] private ElementOfWaveSettings[] _elemensOfWaveSettings;
+    public ElementOfWaveSettings[] ElemensOfWaveSettings => _elemensOfWaveSettings;
     public Transform spawnPosition => _spawnPosition;
     public float StartWaveDelay => _startWaveDelay;
 }

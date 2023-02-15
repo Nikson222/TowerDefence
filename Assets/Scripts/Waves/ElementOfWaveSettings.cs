@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(menuName = "Enemies Wave", order = 2, fileName = "New Enemy Wave")]
-public class ElemenOfWaveSettings : ScriptableObject
+public class ElementOfWaveSettings : ScriptableObject
 {
     [SerializeField] GameObject _enemyPrefab;
     [SerializeField] float _spawnDelay;

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53e93d9d2ebc27a4b917a4e200cb7748, type: 3}
-  m_Name: 1
+  m_Name: 2
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 7811824783209492931, guid: 81f09d023713c8b4eba130b1ff9b9b4e, type: 3}
-  _spawnDelay: 1
-  _countOfEnemy: 3
-  _switchToNextElementDelay: 2
+  _spawnDelay: 0.1
+  _countOfEnemy: 5
+  _switchToNextElementDelay: 1

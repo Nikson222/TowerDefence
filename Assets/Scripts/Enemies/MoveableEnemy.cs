@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,17 +12,13 @@ public class MoveableEnemy : Enemy
     protected int _wayPointIndex;
     protected Vector2 _CurrentWayPoint;
 
-    public void InitPath(WayPoint[] wayPoints)
-    {
-        _wayPointsList = wayPoints;
-    }
-
     protected void Start()
     {
-        _wayPointIndex = 0;
-        _CurrentWayPoint = _wayPointsList[_wayPointIndex].WayPointPosition; 
-    }
+        _enemyRigidbody = GetComponent<Rigidbody2D>();
 
+        _wayPointIndex = 0;
+        _CurrentWayPoint = _wayPointsList[_wayPointIndex].WayPointPosition;
+    }
     private void Update()
     {
         if (CurrentWayPointReached())
@@ -33,14 +30,19 @@ public class MoveableEnemy : Enemy
         Move();
     }
 
+    public void InitPath(WayPoint[] wayPoints)
+    {
+        _wayPointsList = wayPoints;
+        _wayPointIndex = 0;
+        _CurrentWayPoint = _wayPointsList[_wayPointIndex].WayPointPosition;
+    }
+
     protected bool CurrentWayPointReached()
     {
         float distanceToWaPoint = ((Vector2)transform.position - _CurrentWayPoint).magnitude;
 
-        if (distanceToWaPoint < 0.1f)
-            return true;
-        else
-            return false;
+        if (distanceToWaPoint < 0.1f) return true;
+        else return false;
     }
 
     protected void WayPointItterate()
@@ -48,7 +50,7 @@ public class MoveableEnemy : Enemy
         _wayPointIndex++;
 
         if (_wayPointIndex > _wayPointsList.Length - 1)
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         else
             _CurrentWayPoint = _wayPointsList[_wayPointIndex].WayPointPosition;
     }
@@ -65,6 +67,6 @@ public class MoveableEnemy : Enemy
 
     protected override void Move()
     {
-        transform.position = Vector2.MoveTowards(transform.position, _CurrentWayPoint, _speed * Time.fixedDeltaTime);
+        _enemyRigidbody.position = Vector2.MoveTowards(transform.position, _CurrentWayPoint, _speed * Time.fixedDeltaTime);
     }
 }

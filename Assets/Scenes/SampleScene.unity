@@ -2981,17 +2981,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentForSpawned: {fileID: 17208993}
-  _parentOfWaypoints: {fileID: 643726183}
+  _waypoints:
+  - {fileID: 1381750618}
+  - {fileID: 338392495}
+  - {fileID: 2048813961}
+  - {fileID: 446665353}
+  - {fileID: 709422226}
+  - {fileID: 1645317852}
+  - {fileID: 1527900818}
   _waves:
   - _startWaveDelay: 0
     _spawnPosition: {fileID: 739559168}
     _elemensOfWaveSettings:
     - {fileID: 11400000, guid: cb2c9fd3bc8e2004ba7beb10afc46b93, type: 2}
-    - {fileID: 11400000, guid: 8854f4f95ada5714ca915fd3924d3027, type: 2}
-  - _startWaveDelay: 5
+    - {fileID: 11400000, guid: fa87e7c2e8595ea43b1354404b4a24a7, type: 2}
+  - _startWaveDelay: 10
     _spawnPosition: {fileID: 739559168}
     _elemensOfWaveSettings:
-    - {fileID: 11400000, guid: fa87e7c2e8595ea43b1354404b4a24a7, type: 2}
+    - {fileID: 11400000, guid: cb2c9fd3bc8e2004ba7beb10afc46b93, type: 2}
+    - {fileID: 11400000, guid: 8854f4f95ada5714ca915fd3924d3027, type: 2}
+  _enemyPooler: {fileID: 2070907598}
+  _parentOfWaypoints: {fileID: 643726183}
 --- !u!4 &1811968012
 Transform:
   m_ObjectHideFlags: 0
@@ -3056,4 +3066,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 643726184}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2070907597
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2070907599}
+  - component: {fileID: 2070907598}
+  m_Layer: 0
+  m_Name: -------Pooler-------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2070907598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070907597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041e0530255418c41ae81dec2e225be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _poolSize: 10
+  _insufficientPoolSize: 2
+--- !u!4 &2070907599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070907597}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.255462, y: 4.9570317, z: -0.10404782}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
