@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 7811824783209492931, guid: cf36d31fb43a7364b95a1c69a96a67c8, type: 3}
-  _spawnDelay: 1
+  _spawnDelay: 2
   _countOfEnemy: 8
   _switchToNextElementDelay: 2

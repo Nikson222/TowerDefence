@@ -22,6 +22,7 @@ public class WayPoint : MonoBehaviour
         }
     }
 
+    #region Editor
 #if UNITY_EDITOR
     [Header("Gizmos Settings")]
     [SerializeField] private Color _gizmozColor = new Color(0, 0, 0, 60);
@@ -36,4 +37,5 @@ public class WayPoint : MonoBehaviour
         Gizmos.DrawLine(_leftBottomAngle + (Vector2)transform.position, _leftTopAngle + (Vector2)transform.position);
     }
 #endif
+    #endregion
 }

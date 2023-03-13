@@ -1,14 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 public class EnemiesPooler : MonoBehaviour
 {
     [SerializeField] private int _poolSize;
     [SerializeField] private int _insufficientPoolSize;
 
-    Dictionary<GameObject, Queue<MoveableEnemy>> _poolerDictionary;
+    private Dictionary<GameObject, Queue<MoveableEnemy>> _poolerDictionary;
 
     public void Init(HashSet<MoveableEnemy> enemiesTypes)
     {

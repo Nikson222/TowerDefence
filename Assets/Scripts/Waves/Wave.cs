@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class Wave
 {
     [SerializeField] private float _startWaveDelay;
-    [SerializeField] Transform _spawnPosition;
+    [SerializeField] private Transform _spawnPosition;
     [SerializeField] private ElementOfWaveSettings[] _elemensOfWaveSettings;
     public ElementOfWaveSettings[] ElemensOfWaveSettings => _elemensOfWaveSettings;
-    public Transform spawnPosition => _spawnPosition;
+    public Transform SpawnPosition => _spawnPosition;
     public float StartWaveDelay => _startWaveDelay;
 }

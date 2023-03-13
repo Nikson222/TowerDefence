@@ -9,6 +9,6 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected float _speed;
 
     abstract protected void Move();
-    abstract protected void GetDamage();
+    abstract public void GetDamage(float damage);
     abstract protected void Die();
 }

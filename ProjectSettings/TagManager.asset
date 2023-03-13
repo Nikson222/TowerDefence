@@ -8,10 +8,10 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - BuildArea
   - Water
   - UI
-  - 
+  - Tower
   - 
   - 
   - 
@@ -40,4 +40,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BuildArea
+    uniqueID: 2302216129
+    locked: 0
+  - name: Tower
+    uniqueID: 808661461
     locked: 0

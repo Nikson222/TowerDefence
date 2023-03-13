@@ -55,14 +55,17 @@ public class MoveableEnemy : Enemy
             _CurrentWayPoint = _wayPointsList[_wayPointIndex].WayPointPosition;
     }
 
-    protected override void GetDamage()
+    public override void GetDamage(float damage)
     {
-        throw new System.NotImplementedException();
+        _healthPoints -= damage;
+        if (_healthPoints <= 0)
+            Die();
     }
 
     protected override void Die()
     {
-        throw new System.NotImplementedException();
+        gameObject.SetActive(false);
+        _healthPoints = _maxHealthPoints;
     }
 
     protected override void Move()

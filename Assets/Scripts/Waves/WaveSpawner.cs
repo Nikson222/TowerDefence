@@ -16,6 +16,7 @@ public class WaveSpawner : MonoBehaviour
 
     private Action OnWaveSpawned;
 
+    #region Editor
 #if UNITY_EDITOR
     [SerializeField] private GameObject _parentOfWaypoints;
     private void OnValidate()
@@ -24,6 +25,7 @@ public class WaveSpawner : MonoBehaviour
             _waypoints = _parentOfWaypoints.GetComponentsInChildren<WayPoint>();
     }
 #endif
+    #endregion
 
     private void Start()
     {
@@ -51,13 +53,13 @@ public class WaveSpawner : MonoBehaviour
     {
         for (int _elementIndex = 0; _elementIndex < _waves[_waveIndex].ElemensOfWaveSettings.Length; _elementIndex++)
         {
-            for (int enemyCount = _waves[_waveIndex].ElemensOfWaveSettings[_elementIndex].countOfEnemy; enemyCount > 0; enemyCount--)
+            for (int enemyCount = _waves[_waveIndex].ElemensOfWaveSettings[_elementIndex].CountOfEnemy; enemyCount > 0; enemyCount--)
             {
                 var spawnedEnemy = _enemyPooler.GiveEnemies(_waves[_waveIndex].ElemensOfWaveSettings[_elementIndex].EnemyPrefab);
                 spawnedEnemy.InitPath(_waypoints);
-                spawnedEnemy.gameObject.transform.position = _waves[_waveIndex].spawnPosition.position;
+                spawnedEnemy.gameObject.transform.position = _waves[_waveIndex].SpawnPosition.position;
 
-                yield return new WaitForSeconds(_waves[_waveIndex].ElemensOfWaveSettings[_elementIndex].spawnDelay);
+                yield return new WaitForSeconds(_waves[_waveIndex].ElemensOfWaveSettings[_elementIndex].SpawnDelay);
             }
 
             yield return new WaitForSeconds(_waves[_waveIndex].ElemensOfWaveSettings[_elementIndex].SwitchToNextElementDelay);
