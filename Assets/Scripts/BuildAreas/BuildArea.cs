@@ -13,7 +13,7 @@ public class BuildArea : MonoBehaviour
     public bool MouseInArea;
 
 
-    private void OnMouseDown()
+    private void OnMouseUp()
     {
         OnClicked?.Invoke(this);    
     }

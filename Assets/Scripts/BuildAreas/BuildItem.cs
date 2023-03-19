@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
-public class TowerItem : MonoBehaviour
+public class BuildItem : MonoBehaviour
 {
     public Action OnTowerSendedToBuilder;
     private Image _buttonImage;

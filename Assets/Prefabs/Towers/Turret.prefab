@@ -156,14 +156,21 @@ MonoBehaviour:
   _updgadePrice: 120
   _towerLevel: 1
   _towerMaxLevel: 4
-  upgrades: []
   _damage: 10
   _delayShooting: 1
   _attackRadius: 5
   _rotationSpeed: 20
   _TargetViewingFault: 5
-  _enemyDetectingDelay: 0.1
+  _movementStrategy: 0
   _bulletPrefab: {fileID: 392122295861552765, guid: 4c91d16e2060e874aa5a6c9c6b0649cf, type: 3}
   _shootPosition: {fileID: 5669606580369133585}
   _bulletSpeed: 2.5
   _bulletLifeTime: 3
+  _enemyDetectingDelay: 0.1
+  upgrades:
+  - level: 2
+    newUpgradeCost: 100
+    newSprite: {fileID: 21300000, guid: 748ae8b33df036b46a86e0387f1602cf, type: 3}
+    newDamage: 100
+    newRange: 100
+    ProjectileStrategy: 0

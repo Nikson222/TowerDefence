@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class TowerBuilder : MonoBehaviour
 {
+    public Action OnBuild;
 
     static public TowerBuilder Instance;
     private GameObject _towerPrefab;
@@ -28,5 +30,11 @@ public class TowerBuilder : MonoBehaviour
                 buildArea.IsPlaced = true;
             }
         }
+        OnBuild?.Invoke();
+    }
+
+    private void OnMouseDown()
+    {
+        print("dd");
     }
 }

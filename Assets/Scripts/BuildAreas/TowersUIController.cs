@@ -1,14 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TowersUIController : MonoBehaviour
 {
-    [SerializeField] private TowerStore _towerStore;
     [SerializeField] private GameObject _buildPanel;
-    [SerializeField] private GameObject _towerItemParentPrefab;
-    [SerializeField] private List<TowerItem> _towerItems = new List<TowerItem>();
     [SerializeField] private GameObject _UpgradePanel;
-    public List<TowerItem> TowerItems => _towerItems;
+
+    [SerializeField] private GameObject _towerItemParentPrefab;
+
+    [SerializeField] private TowerStore _towerStore;
+    [SerializeField] private List<BuildItem> _towerItems = new List<BuildItem>();
+
+    public List<BuildItem> TowerItems => _towerItems;
+
+    public bool _isClickOnUI;
 
     private void Awake()
     {
@@ -18,7 +24,7 @@ public class TowersUIController : MonoBehaviour
             TowerItemsParent.transform.SetParent(_buildPanel.transform);
             TowerItemsParent.transform.localScale = Vector3.one;
 
-            var TowerItem = TowerItemsParent.GetComponentInChildren<TowerItem>();
+            var TowerItem = TowerItemsParent.GetComponentInChildren<BuildItem>();
             var toweSpriteRenderer = tower.GetComponent<SpriteRenderer>();
             TowerItem.InitItem(toweSpriteRenderer.sprite, tower, toweSpriteRenderer.color);
 
@@ -26,8 +32,22 @@ public class TowersUIController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+                _isClickOnUI = true;
+            else
+                _isClickOnUI = false;
+        }
+    }
+
+
     public void EnablePanel(BuildArea buildArea)
     {
+        DisablePanel();
+
         if (_buildPanel != null && _UpgradePanel != null)
         {
             if (!buildArea.IsPlaced)

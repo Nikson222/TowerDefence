@@ -1,11 +1,15 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class BuildAreasController : MonoBehaviour
+public class TowersController : MonoBehaviour
 {
     [SerializeField] private BuildArea[] _buildAreas;
-    [SerializeField] private TowersUIController _UIManager;
     [SerializeField] private TowerBuilder _towerBuilder;
+    [SerializeField] private Upgrader _towerUpgrader;
+    [SerializeField] private TowersUIController _UIManager;
+
     private bool _isClickOnBuildArea;
+    public bool _isClickOnUI;
     private BuildArea _selectedBuildArea;
 
     #region Editor
@@ -21,6 +25,9 @@ public class BuildAreasController : MonoBehaviour
 
     private void Start()
     {
+        _towerUpgrader.OnUpgrade += _UIManager.DisablePanel;
+        _towerBuilder.OnBuild += _UIManager.DisablePanel;
+
         foreach (var area in _buildAreas)
         {
             area.OnClicked += SetSelectedBuildArea;
@@ -36,10 +43,11 @@ public class BuildAreasController : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            if (!_isClickOnBuildArea)
+            if (!_isClickOnBuildArea && !_UIManager._isClickOnUI)
+            {
                 _UIManager.DisablePanel();
-            else
-                _isClickOnBuildArea = false;
+            }
+            _isClickOnBuildArea = false;
         }
     }
 
@@ -48,17 +56,19 @@ public class BuildAreasController : MonoBehaviour
         _towerBuilder.BuildTower(_selectedBuildArea);
     }
 
+    public void UpgradeTower()
+    {
+        _towerUpgrader.UpgradeTower(_selectedBuildArea);
+    }
+
     private void SetSelectedBuildArea(BuildArea buildArea)
     {
-        UpdateClickState(true);
+        if (!_UIManager._isClickOnUI)
+        {
+            _isClickOnBuildArea = true;
 
-        _selectedBuildArea = buildArea;
-        _UIManager.EnablePanel(buildArea);
+            _selectedBuildArea = buildArea;
+            _UIManager.EnablePanel(buildArea);
+        }
     }
-
-    public void UpdateClickState(bool clickOnBuildArea)
-    {
-        _isClickOnBuildArea = clickOnBuildArea;
-    }
-
 }
