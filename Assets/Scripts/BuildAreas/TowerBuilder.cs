@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Towers;
 
 public class TowerBuilder : MonoBehaviour
 {
@@ -26,15 +27,10 @@ public class TowerBuilder : MonoBehaviour
             {
                 var tower = Instantiate(_towerPrefab, buildArea.transform.position, Quaternion.identity);
                 tower.transform.SetParent(buildArea.transform);
-                buildArea.TowerInArea = tower.GetComponent<ITower>();
+                buildArea.TowerInArea = tower.GetComponent<Tower>();
                 buildArea.IsPlaced = true;
             }
         }
         OnBuild?.Invoke();
-    }
-
-    private void OnMouseDown()
-    {
-        print("dd");
     }
 }

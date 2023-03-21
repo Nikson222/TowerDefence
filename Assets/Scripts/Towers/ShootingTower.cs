@@ -5,53 +5,43 @@ using UnityEngine;
 using Towers;
 using ProjectileStrategies;
 
-[RequireComponent(typeof(Rigidbody2D))]
+
 public abstract class ShootingTower : Tower
 {
-    protected Rigidbody2D _rigidBody2D;
-
     [Header("Tower Main Settings")]
     [SerializeField] protected float _damage;
     [SerializeField] protected float _delayShooting;
     [SerializeField] protected float _attackRadius;
-    [SerializeField] protected float _rotationSpeed;
-    [SerializeField] protected float _TargetViewingFault;
+
     [SerializeField] protected ProjectileStrategy _movementStrategy;
 
 
     [Header("Bullet settings")]
-    [SerializeField] protected Bullet _bulletPrefab;
+    [SerializeField] protected Bullet _projectilePrefab;
     [SerializeField] protected Transform _shootPosition;
-    [SerializeField] protected float _bulletSpeed;
-    [SerializeField] protected float _bulletLifeTime;
+    [SerializeField] protected float _projectileSpeed;
+    [SerializeField] protected float _projectileLifeTime;
 
-    protected Enemy _targetEnemy;
     [SerializeField] protected float _enemyDetectingDelay;
+    protected Enemy _targetEnemy;
     protected float _timeAfterDetect;
 
-    public List<UpgradeConfig> upgrades = new List<UpgradeConfig>();
+    public List<UpgradeConfig> Upgrades = new List<UpgradeConfig>();
 
     protected bool _isShootAllow = true;
 
     public float Damage => _damage;
     public float DelayShooting => _delayShooting;
 
-
-    virtual protected void Awake()
-    {
-        _rigidBody2D = GetComponent<Rigidbody2D>();
-        _rigidBody2D.gravityScale = 0;
-    }
-
-    private void Update()
+    protected virtual void Update()
     {
         if (_targetEnemy)
         {
-            if (IsTargetEnemyInRadius() && _targetEnemy.isActiveAndEnabled)
+            if (_isTargetEnemyInRadius() && _targetEnemy.isActiveAndEnabled)
             {
-                if (_isShootAllow && IsTowerLooksTarget())
+                if (_isShootAllow && _isAdditionalShooting—onditionsTrue())
                 {
-                    Shot();
+                    Shoot();
                 }
             }
             else
@@ -70,35 +60,25 @@ public abstract class ShootingTower : Tower
         }
     }
 
-    virtual protected void FixedUpdate()
+    protected virtual bool _isAdditionalShooting—onditionsTrue()
     {
-        if (_targetEnemy && _targetEnemy.isActiveAndEnabled)
-            FollowRotate();
+        return true;
     }
 
-    virtual protected void FollowRotate()
-    {
-        Vector2 direction = _targetEnemy.transform.position - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-
-        float newAngle = Mathf.MoveTowardsAngle(_rigidBody2D.rotation, angle, _rotationSpeed * Time.deltaTime);
-        _rigidBody2D.MoveRotation(newAngle);
-    }
-
-    virtual protected void Shot()
+    virtual protected void Shoot()
     {
         _isShootAllow = false;
 
-        Bullet bulletGameObject = Instantiate(_bulletPrefab);
+        Bullet bulletGameObject = Instantiate(_projectilePrefab);
         bulletGameObject.transform.position = _shootPosition.position;
         bulletGameObject.transform.rotation = _shootPosition.rotation;
 
-        bulletGameObject.Init(_targetEnemy, _bulletSpeed, _bulletLifeTime, _damage, ProjectileStategiesStore.ProjectileStrateries[_movementStrategy]);
+        bulletGameObject.Init(_targetEnemy, _projectileSpeed, _projectileLifeTime, _damage, ProjectileStategiesStore.ProjectileStrateries[_movementStrategy]);
 
         StartCoroutine(ShotRecovery());
     }
 
-    virtual protected bool IsTargetEnemyInRadius()
+    virtual protected bool _isTargetEnemyInRadius()
     {
         return Vector2.Distance(transform.position, _targetEnemy.transform.position) <= _attackRadius;
     }
@@ -113,15 +93,7 @@ public abstract class ShootingTower : Tower
         }
     }
 
-    virtual protected bool IsTowerLooksTarget()
-    {
-        Vector2 direction = _targetEnemy.transform.position - transform.position;
-        direction.Normalize();
-        float angle = Vector2.SignedAngle(transform.up, direction);
-        return Mathf.Abs(angle) < _TargetViewingFault;
-    }
-
-    virtual protected void SetMovementStrategy(ProjectileStrategy movementStrategy)
+    virtual protected void SetProjectileMovementStrategy(ProjectileStrategy movementStrategy)
     {
         _movementStrategy = movementStrategy;
     }
@@ -132,17 +104,36 @@ public abstract class ShootingTower : Tower
         _isShootAllow = true;
     }
 
+    public override void UpgradeTower()
+    {
+        if (Upgrades.Count > _towerLevel)
+            _updgadePrice = Upgrades[_towerLevel].newUpgradeCost;
+        _damage = Upgrades[_towerLevel].newDamage;
+        _attackRadius = Upgrades[_towerLevel].newRange;
+        SetProjectileMovementStrategy(Upgrades[_towerLevel].ProjectileStrategy);
+
+        if (Upgrades[_towerLevel].newSprite != null)
+            GetComponent<SpriteRenderer>().sprite = Upgrades[_towerLevel].newSprite;
+
+        _towerLevel++;
+    }
+
+    virtual protected void SetMovementStrategy(ProjectileStrategy movementStrategy)
+    {
+        _movementStrategy = movementStrategy;
+    }
+
     [Serializable]
     public struct UpgradeConfig
     {
-        public int level;
+        public float level;
         public int newUpgradeCost;
         public Sprite newSprite;
-        public int newDamage;
-        public int newRange;
+        public float newDamage;
+        public float newRange;
+        public float newRotateSpeed;
         public ProjectileStrategy ProjectileStrategy;
     }
-
     #region Editor
 #if UNITY_EDITOR
     virtual protected void OnDrawGizmosSelected()
@@ -153,3 +144,4 @@ public abstract class ShootingTower : Tower
 #endif
     #endregion
 }
+

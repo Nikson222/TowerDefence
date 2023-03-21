@@ -41,8 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5669606580593455059}
   - component: {fileID: 5669606580593455056}
-  - component: {fileID: 5669606580593455053}
-  - component: {fileID: 2142641874}
+  - component: {fileID: 3036342276787166555}
   m_Layer: 6
   m_Name: Turret
   m_TagString: Untagged
@@ -118,28 +117,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &5669606580593455053
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5669606580593455057}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &2142641874
+--- !u!114 &3036342276787166555
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,29 +126,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 5669606580593455057}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2413fc98cbf7f2241bf48ec8136eef4c, type: 3}
+  m_Script: {fileID: 11500000, guid: e52d0c4bcac81f444ace03b9437f240e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeOfTower: 0
-  _buildPrice: 100
-  _updgadePrice: 120
-  _towerLevel: 1
-  _towerMaxLevel: 4
+  _buildPrice: 0
+  _updgadePrice: 0
+  _towerLevel: 0
   _damage: 10
   _delayShooting: 1
-  _attackRadius: 5
-  _rotationSpeed: 20
-  _TargetViewingFault: 5
+  _attackRadius: 3
   _movementStrategy: 0
-  _bulletPrefab: {fileID: 392122295861552765, guid: 4c91d16e2060e874aa5a6c9c6b0649cf, type: 3}
+  _projectilePrefab: {fileID: 392122295861552765, guid: 4c91d16e2060e874aa5a6c9c6b0649cf, type: 3}
   _shootPosition: {fileID: 5669606580369133585}
-  _bulletSpeed: 2.5
-  _bulletLifeTime: 3
-  _enemyDetectingDelay: 0.1
-  upgrades:
-  - level: 2
-    newUpgradeCost: 100
-    newSprite: {fileID: 21300000, guid: 748ae8b33df036b46a86e0387f1602cf, type: 3}
-    newDamage: 100
-    newRange: 100
+  _projectileSpeed: 4.83
+  _projectileLifeTime: 4.68
+  _enemyDetectingDelay: 0.11
+  Upgrades:
+  - level: 1
+    newUpgradeCost: 0
+    newSprite: {fileID: 21300000, guid: 0779ad3feec52124e97114bcbb12ef13, type: 3}
+    newDamage: 12.57
+    newRange: 15.01
+    newRotateSpeed: 13.02
     ProjectileStrategy: 0
+  _rotationSpeed: 3
+  _TargetViewingFault: 1
