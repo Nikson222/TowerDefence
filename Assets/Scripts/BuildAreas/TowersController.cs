@@ -35,7 +35,7 @@ public class TowersController : MonoBehaviour
 
         foreach (var TowerItem in _UIManager.TowerItems)
         {
-            TowerItem.OnTowerSendedToBuilder += SpawnTowerOnArea;
+            TowerItem.OnTowerSendedToBuilder += BuildTowerOnArea;
         }
     }
 
@@ -51,7 +51,7 @@ public class TowersController : MonoBehaviour
         }
     }
 
-    private void SpawnTowerOnArea()
+    private void BuildTowerOnArea()
     {
         _towerBuilder.BuildTower(_selectedBuildArea);
     }

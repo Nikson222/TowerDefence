@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ad4f14f4c1becf4c947800dd7ade3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthPoints: 50
+  _healthPoints: 150
   _maxHealthPoints: 50
   _speed: 0.5
   _wayPointsList:

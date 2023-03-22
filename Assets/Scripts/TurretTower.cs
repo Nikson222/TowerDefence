@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ProjectileStrategies;
 
 public class TurretTower : ShootingTower
 {
     [SerializeField] protected float _rotationSpeed;
     [SerializeField] protected float _TargetViewingFault;
 
+    protected Bullet _currentBullet;
 
     protected virtual void FixedUpdate()
     {
@@ -33,5 +35,40 @@ public class TurretTower : ShootingTower
     protected override bool _isAdditionalShooting—onditionsTrue()
     {
         return IsTowerLooksTarget();
+    }
+
+    protected override IEnumerator ShotRecovery()
+    {
+        StartCoroutine(BulletReload());
+        return base.ShotRecovery();
+    }
+
+    protected virtual IEnumerator BulletReload()
+    {
+        yield return new WaitForSeconds(DelayShooting/2);
+        _currentBullet = BulletPooler.Instance.GiveBullet(this);
+
+        _currentBullet.enabled = false;
+        _currentBullet.transform.SetParent(transform);
+
+        _currentBullet.transform.position = _shootPosition.position;
+        _currentBullet.transform.rotation = _shootPosition.rotation;
+    }
+
+    protected override void Shoot()
+    {
+        _isShootAllow = false;
+
+        if (_currentBullet == null)
+            _currentBullet = BulletPooler.Instance.GiveBullet(this);
+
+        _currentBullet.transform.SetParent(null);
+        _currentBullet.enabled = true;
+        _currentBullet.transform.position = _shootPosition.position;
+        _currentBullet.transform.rotation = _shootPosition.rotation;
+
+        _currentBullet.Init(_targetEnemy, _projectileSpeed, _projectileLifeTime, _damage, ProjectileStategiesStore.ProjectileStrateries[_movementStrategy]);
+
+        StartCoroutine(ShotRecovery());
     }
 }

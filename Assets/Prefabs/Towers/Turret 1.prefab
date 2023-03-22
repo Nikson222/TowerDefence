@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4775049938022855232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5726592354301241383}
+  m_Layer: 6
+  m_Name: SootPosition (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5726592354301241383
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4775049938022855232}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.22, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5669606580593455059}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5669606580369133590
 GameObject:
   m_ObjectHideFlags: 0
@@ -24,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5669606580369133590}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.22, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41,9 +72,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5669606580593455059}
   - component: {fileID: 5669606580593455056}
-  - component: {fileID: 3036342276787166555}
+  - component: {fileID: 7009371919036591358}
   m_Layer: 6
-  m_Name: Turret
+  m_Name: Turret 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,6 +93,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5669606580369133585}
+  - {fileID: 5726592354301241383}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -106,8 +138,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 586232d27e21f3545afdd6fd72748a35, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: bf76b23707395f845a26947fc8d7d641, type: 3}
+  m_Color: {r: 0.5235849, g: 0.6784933, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -117,7 +149,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3036342276787166555
+--- !u!114 &7009371919036591358
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,23 +158,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 5669606580593455057}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52d0c4bcac81f444ace03b9437f240e, type: 3}
+  m_Script: {fileID: 11500000, guid: 336c329cd04c7e347941db97d6ddf780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _buildPrice: 0
   _updgadePrice: 0
-  _towerLevel: 0
+  _towerLevel: 1
   UpgradeBlueprint:
-    _prefab: {fileID: 5669606580593455057, guid: 63378c6881a8bca49875469c34122fc1, type: 3}
-    _upgradeCost: 100
+    _prefab: {fileID: 0}
+    _upgradeCost: 0
   _damage: 10
-  _delayShooting: 1
-  _attackRadius: 4
+  _delayShooting: 0.5
+  _attackRadius: 5
   _movementStrategy: 0
   _projectilePrefab: {fileID: 392122295861552765, guid: 4c91d16e2060e874aa5a6c9c6b0649cf, type: 3}
   _shootPosition: {fileID: 5669606580369133585}
-  _projectileSpeed: 4
+  _projectileSpeed: 5
   _projectileLifeTime: 1
-  _enemyDetectingDelay: 0.11
-  _rotationSpeed: 5
+  _enemyDetectingDelay: 0.1
+  _rotationSpeed: 10
   _TargetViewingFault: 4
+  _firstRocketPosition: {fileID: 5669606580369133585}
+  _secondRocketPosition: {fileID: 5726592354301241383}
+  _firstRocketBullet: {fileID: 0}
+  _secondRocketBullet: {fileID: 0}

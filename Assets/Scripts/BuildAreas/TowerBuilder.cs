@@ -33,4 +33,16 @@ public class TowerBuilder : MonoBehaviour
         }
         OnBuild?.Invoke();
     }
+
+    public void BuildTower(BuildArea buildArea, GameObject prefab)
+    {
+        if (buildArea != null && prefab != null)
+        {
+            var tower = Instantiate(prefab, buildArea.transform.position, Quaternion.identity);
+            tower.transform.SetParent(buildArea.transform);
+            buildArea.TowerInArea = tower.GetComponent<Tower>();
+            buildArea.IsPlaced = true;
+        }
+        OnBuild?.Invoke();
+    }
 }

@@ -26,12 +26,15 @@ public abstract class ShootingTower : Tower
     protected Enemy _targetEnemy;
     protected float _timeAfterDetect;
 
-    public List<UpgradeConfig> Upgrades = new List<UpgradeConfig>();
-
     protected bool _isShootAllow = true;
 
     public float Damage => _damage;
     public float DelayShooting => _delayShooting;
+
+    protected virtual void Start()
+    {
+        BulletPooler.Instance.SpawnPool(_projectilePrefab, this);
+    }
 
     protected virtual void Update()
     {
@@ -65,15 +68,19 @@ public abstract class ShootingTower : Tower
         return true;
     }
 
-    virtual protected void Shoot()
+    protected virtual void Shoot()
     {
         _isShootAllow = false;
 
-        Bullet bulletGameObject = Instantiate(_projectilePrefab);
-        bulletGameObject.transform.position = _shootPosition.position;
-        bulletGameObject.transform.rotation = _shootPosition.rotation;
+        
+        var currentBullet = BulletPooler.Instance.GiveBullet(this);
 
-        bulletGameObject.Init(_targetEnemy, _projectileSpeed, _projectileLifeTime, _damage, ProjectileStategiesStore.ProjectileStrateries[_movementStrategy]);
+        currentBullet.transform.SetParent(null);
+        currentBullet.enabled = true;
+        currentBullet.transform.position = _shootPosition.position;
+        currentBullet.transform.rotation = _shootPosition.rotation;
+
+        currentBullet.Init(_targetEnemy, _projectileSpeed, _projectileLifeTime, _damage, ProjectileStategiesStore.ProjectileStrateries[_movementStrategy]);
 
         StartCoroutine(ShotRecovery());
     }
@@ -104,36 +111,11 @@ public abstract class ShootingTower : Tower
         _isShootAllow = true;
     }
 
-    public override void UpgradeTower()
-    {
-        if (Upgrades.Count > _towerLevel)
-            _updgadePrice = Upgrades[_towerLevel].newUpgradeCost;
-        _damage = Upgrades[_towerLevel].newDamage;
-        _attackRadius = Upgrades[_towerLevel].newRange;
-        SetProjectileMovementStrategy(Upgrades[_towerLevel].ProjectileStrategy);
-
-        if (Upgrades[_towerLevel].newSprite != null)
-            GetComponent<SpriteRenderer>().sprite = Upgrades[_towerLevel].newSprite;
-
-        _towerLevel++;
-    }
-
     virtual protected void SetMovementStrategy(ProjectileStrategy movementStrategy)
     {
         _movementStrategy = movementStrategy;
     }
 
-    [Serializable]
-    public struct UpgradeConfig
-    {
-        public float level;
-        public int newUpgradeCost;
-        public Sprite newSprite;
-        public float newDamage;
-        public float newRange;
-        public float newRotateSpeed;
-        public ProjectileStrategy ProjectileStrategy;
-    }
     #region Editor
 #if UNITY_EDITOR
     virtual protected void OnDrawGizmosSelected()
