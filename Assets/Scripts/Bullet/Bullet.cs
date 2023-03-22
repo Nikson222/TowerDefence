@@ -5,8 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class Bullet : MonoBehaviour
 {
-    protected ProjectileMovementStrategy _movementStrategy;
-
     protected Rigidbody2D _rigidbody2D;
     protected Enemy _targetEnemy;
     protected float _bulletSpeed;
@@ -22,12 +20,11 @@ public abstract class Bullet : MonoBehaviour
         _rigidbody2D.gravityScale = 0;
     }
 
-    public virtual void Init(Enemy targetEnemy, float followSpeed, float lifeTime, float damage, ProjectileMovementStrategy movementStrategy)
+    public virtual void Init(Enemy targetEnemy, float followSpeed, float lifeTime, float damage)
     {
         _targetEnemy = targetEnemy;
         _bulletSpeed = followSpeed;
         _damage = damage;
-        _movementStrategy = movementStrategy;
         _lifeTime = lifeTime;
 
         _directionAfterEnemyDie = transform.position - _targetEnemy.transform.position;

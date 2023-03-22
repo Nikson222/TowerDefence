@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ProjectileStrategies;
 
 public class TwiceTurretTower : TurretTower
 {
@@ -81,7 +80,7 @@ public class TwiceTurretTower : TurretTower
         bullet.transform.SetParent(null);
         bullet.enabled = true;
 
-        bullet.Init(_targetEnemy, _projectileSpeed, _projectileLifeTime, _damage, ProjectileStategiesStore.ProjectileStrateries[_movementStrategy]);
+        bullet.Init(_targetEnemy, _projectileSpeed, _projectileLifeTime, _damage);
     }
 
     private void DisableBullet(Bullet bullet, Transform rocketPosition)

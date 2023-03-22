@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Towers;
-using ProjectileStrategies;
 
 
 public abstract class ShootingTower : Tower
@@ -12,8 +11,6 @@ public abstract class ShootingTower : Tower
     [SerializeField] protected float _damage;
     [SerializeField] protected float _delayShooting;
     [SerializeField] protected float _attackRadius;
-
-    [SerializeField] protected ProjectileStrategy _movementStrategy;
 
 
     [Header("Bullet settings")]
@@ -80,7 +77,7 @@ public abstract class ShootingTower : Tower
         currentBullet.transform.position = _shootPosition.position;
         currentBullet.transform.rotation = _shootPosition.rotation;
 
-        currentBullet.Init(_targetEnemy, _projectileSpeed, _projectileLifeTime, _damage, ProjectileStategiesStore.ProjectileStrateries[_movementStrategy]);
+        currentBullet.Init(_targetEnemy, _projectileSpeed, _projectileLifeTime, _damage);
 
         StartCoroutine(ShotRecovery());
     }
@@ -100,22 +97,11 @@ public abstract class ShootingTower : Tower
         }
     }
 
-    virtual protected void SetProjectileMovementStrategy(ProjectileStrategy movementStrategy)
-    {
-        _movementStrategy = movementStrategy;
-    }
-
     virtual protected IEnumerator ShotRecovery()
     {
         yield return new WaitForSeconds(_delayShooting);
         _isShootAllow = true;
     }
-
-    virtual protected void SetMovementStrategy(ProjectileStrategy movementStrategy)
-    {
-        _movementStrategy = movementStrategy;
-    }
-
     #region Editor
 #if UNITY_EDITOR
     virtual protected void OnDrawGizmosSelected()

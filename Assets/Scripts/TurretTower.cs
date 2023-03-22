@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ProjectileStrategies;
 
 public class TurretTower : ShootingTower
 {
@@ -10,6 +9,12 @@ public class TurretTower : ShootingTower
 
     protected Bullet _currentBullet;
 
+    protected override void Start()
+    {
+        base.Start();
+        _isShootAllow = false;
+        StartCoroutine(ShotRecovery());
+    }
     protected virtual void FixedUpdate()
     {
         if (_targetEnemy && _targetEnemy.isActiveAndEnabled)
@@ -67,7 +72,7 @@ public class TurretTower : ShootingTower
         _currentBullet.transform.position = _shootPosition.position;
         _currentBullet.transform.rotation = _shootPosition.rotation;
 
-        _currentBullet.Init(_targetEnemy, _projectileSpeed, _projectileLifeTime, _damage, ProjectileStategiesStore.ProjectileStrateries[_movementStrategy]);
+        _currentBullet.Init(_targetEnemy, _projectileSpeed, _projectileLifeTime, _damage);
 
         StartCoroutine(ShotRecovery());
     }
