@@ -28,8 +28,9 @@ public abstract class ShootingTower : Tower
     public float Damage => _damage;
     public float DelayShooting => _delayShooting;
 
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
         BulletPooler.Instance.SpawnPool(_projectilePrefab, this);
     }
 

@@ -103,6 +103,7 @@ MonoBehaviour:
   _healthPoints: 20
   _maxHealthPoints: 10
   _speed: 0.99
+  _killPrize: 10
   _wayPointsList:
   - {fileID: 0}
   - {fileID: 0}

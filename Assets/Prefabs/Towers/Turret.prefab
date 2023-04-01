@@ -129,16 +129,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52d0c4bcac81f444ace03b9437f240e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buildPrice: 0
-  _updgadePrice: 0
-  _towerLevel: 0
+  _buildPrice: 10
+  _updgadePrice: 100
   UpgradeBlueprint:
     _prefab: {fileID: 5669606580593455057, guid: 63378c6881a8bca49875469c34122fc1, type: 3}
     _upgradeCost: 100
   _damage: 10
   _delayShooting: 1
   _attackRadius: 4
-  _movementStrategy: 0
   _projectilePrefab: {fileID: 392122295861552765, guid: 4c91d16e2060e874aa5a6c9c6b0649cf, type: 3}
   _shootPosition: {fileID: 5669606580369133585}
   _projectileSpeed: 4

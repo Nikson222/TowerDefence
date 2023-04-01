@@ -100,9 +100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ad4f14f4c1becf4c947800dd7ade3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthPoints: 100
+  _healthPoints: 10
   _maxHealthPoints: 20
   _speed: 1.28
+  _killPrize: 5
   _wayPointsList: []
 --- !u!50 &7811824783209492942
 Rigidbody2D:

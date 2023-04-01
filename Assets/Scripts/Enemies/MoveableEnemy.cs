@@ -12,8 +12,9 @@ public class MoveableEnemy : Enemy
     protected int _wayPointIndex;
     protected Vector2 _CurrentWayPoint;
 
-    protected void Start()
+    protected override void Start()
     {
+        base.Start();
         _enemyRigidbody = GetComponent<Rigidbody2D>();
 
         _wayPointIndex = 0;
@@ -64,6 +65,7 @@ public class MoveableEnemy : Enemy
 
     protected override void Die()
     {
+        base.Die();
         gameObject.SetActive(false);
         _healthPoints = _maxHealthPoints;
     }

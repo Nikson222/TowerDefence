@@ -5,7 +5,7 @@ public class TowersController : MonoBehaviour
 {
     [SerializeField] private BuildArea[] _buildAreas;
     [SerializeField] private TowerBuilder _towerBuilder;
-    [SerializeField] private Upgrader _towerUpgrader;
+    [SerializeField] private TowerDisposer _towerDisposer;
     [SerializeField] private TowersUIController _UIManager;
 
     private bool _isClickOnBuildArea;
@@ -23,9 +23,15 @@ public class TowersController : MonoBehaviour
 #endif
     #endregion
 
+    private void Awake()
+    {
+        //test getmoney -- will be deleted
+        PlayerData.GetMoney(500);
+    }
+
     private void Start()
     {
-        _towerUpgrader.OnUpgrade += _UIManager.DisablePanel;
+        _towerDisposer.OnTowerManaged += _UIManager.DisablePanel;
         _towerBuilder.OnBuild += _UIManager.DisablePanel;
 
         foreach (var area in _buildAreas)
@@ -58,7 +64,12 @@ public class TowersController : MonoBehaviour
 
     public void UpgradeTower()
     {
-        _towerUpgrader.UpgradeTower(_selectedBuildArea);
+        _towerDisposer.UpgradeTower(_selectedBuildArea, _selectedBuildArea.TowerInArea.UpgradePrice);
+    }
+
+    public void SellTower()
+    {
+        _towerDisposer.SellTower(_selectedBuildArea, _selectedBuildArea.TowerInArea.BuidPrice);
     }
 
     private void SetSelectedBuildArea(BuildArea buildArea)
